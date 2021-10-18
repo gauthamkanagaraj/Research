@@ -155,7 +155,7 @@ $(".next").on("click", function() {
                                 $(".section5").append(`<center><input type="text" class="ques q7" placeholder="K3 Total"></center>`);
                             }
                             if('k4' in scores[0]) {
-                                $(".section5").append(`<center><input type="text" class="ques q8" placeholder="K1 Total"></center>`);
+                                $(".section5").append(`<center><input type="text" class="ques q8" placeholder="K4 Total"></center>`);
                             }
 
                             kHeadings = Object.keys(scores[0]);
@@ -408,6 +408,7 @@ $(document).on('keypress',function(e) {
                 for (let i=1; i<rowObject.length; i++) {
                     doc.text(regNum[0], 13, 10);
                     regNum.splice(0, 1);
+					
                     for (const property in rowObject[i]) {
                         bodiesInd.push(rowObject[i][property]);
                       }
@@ -427,37 +428,34 @@ $(document).on('keypress',function(e) {
 
                       w = 68;
                       
-                      for(const property in scores[i]) {
-                          doc.text(''+ Math.round(scores[i][property] * 100)/100 + '',40,w);
+                      for(const property in scores[0]) {
+                          doc.text(''+ Math.round(scores[i-1][property] * 100)/100 + '',40,w);
                           w += 20;
-                          console.log(scores[i][property]);
                       }
-                     
                     
-
                       //Recommendations
 
-                      doc.text("Recommendations", 16, 111);
+                      doc.text("Recommendations", 16, 160);
                       var recommendation;
-                      if(output[i] == 'a') {
+                      if(output[i-1] == 'a') {
                         recommendation = "The student is probably struggling with the subject's basics. Focus on rudimentary concepts must be emphasized";
                       }
-                      else if(output[i] == 'b') {
+                      else if(output[i-1] == 'b') {
                         recommendation = "The student has a good grasp of basics, but is struggling with understanding those concepts. Practice is required in areas of content description"
                       }
-                      else if(output[i] == 'c') {
+                      else if(output[i-1] == 'c') {
                         recommendation = "The student has a good overall understanding and application skills. He/She is probably struggling with the notion of time management"
                       }
-                      else if(output[i] == 'd') {
+                      else if(output[i-1] == 'd') {
                         recommendation = "The student is struggling with applying his ideas to real world problems, however he/she has a good foundation of all the concepts in the subject"
                       }
-                      else if(output[i] == 'e') {
+                      else if(output[i-1] == 'e') {
                         recommendation = "The student has an adequate understanding of all the foundational concepts. He/She is also good at expressing his/her ideas and can apply the gained knowledge to solve real world issues. It is adviced to keep up this good work"
                       }
                       var splitTitle = doc.splitTextToSize(recommendation, 180);
                       doc.setFontSize(13);
-                      doc.text(splitTitle, 16, 131);
-
+                      doc.text(splitTitle, 16, 190);
+						
 
                       doc.addPage();
                       for (const property in rowObject[i]) {
